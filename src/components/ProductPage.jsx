@@ -1,14 +1,17 @@
 import { useEffect, useState } from "react";
 import ProductCard from "./ProductCard";
 
+
+
 const ProductPage = () => {
-  const [products, setproduts] = useState([]);
+  const [products, setProducts] = useState([]);
   const [searchTerm, setSearchTerm] = useState("");
   const [category, setCategory] = useState("");
   const [brand, setBrand] = useState("");
-  const [priceRange, setPriceRange] = useState([0, 1000]);
+  const [priceRange, setPriceRange] = useState([0, 9999]);
   const [price, setPrice] = useState("");
   const [sort, setSort] = useState("");
+  
   useEffect(() => {
     const fetchProduct = async () => {
       try {
@@ -26,7 +29,7 @@ const ProductPage = () => {
         
         const data = await url.json();
         console.log(data);
-        setproduts(data);
+        setProducts(data);
       } catch (error) {
         console.log("failed to fetch product:", error);
       }
@@ -59,6 +62,10 @@ const ProductPage = () => {
   const handleSort = (e) => {
     setSort(e.target.value);
   };
+
+
+console.log(products);
+
   return (
     <div>
         <div className="flex justify-center">
@@ -138,20 +145,15 @@ const ProductPage = () => {
           value={sort}
           onChange={handleSort}
         >
-          <option value=""></option>
+          <option value="">Price Order</option>
           <option value="asc">Price: Low to High</option>
           <option value="desc">Price: High to Low</option>
         </select>
       </div>
     </div >
+    <ProductCard  products={products}></ProductCard>
     <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-2">
-    {
-        products.map(data => <>
-    
-        <ProductCard key={data._id} products={products}></ProductCard>
-    
-        </>)
-    }
+
     </div>
     </div>
   );

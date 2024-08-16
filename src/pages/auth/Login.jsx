@@ -9,16 +9,15 @@ import {
     Spin,
     Typography,
   } from "antd";
-  import { Link, useLocation, useNavigate } from "react-router-dom";
+  import { Link,  useNavigate } from "react-router-dom";
 import registerImage from "../../assets/MFSAppRegPage.jpg"
 import { useContext } from "react";
 import { AuthContext } from "../../providers/AuthProviders";
   
 
 const Login = () => {
-    const location = useLocation()
     const navigate = useNavigate()
- const {signIn} = useContext(AuthContext)
+ const {signIn, logOut} = useContext(AuthContext)
     const handleLogin = async (values)=> {
         console.log(values)
         signIn(values.email , values.password)

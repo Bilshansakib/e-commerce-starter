@@ -8,13 +8,14 @@ import {
     Spin,
     Typography,
   } from "antd";
-  import { Link } from "react-router-dom";
+  import { Link, useNavigate } from "react-router-dom";
   import registerImage from "../../assets/MFSAppRegPage.jpg";
 import { useContext, useState } from "react";
 import { AuthContext } from "../../providers/AuthProviders";
 
   
   const Register = () => {
+    const navigate = useNavigate()
     const [error, setError] = useState(null);
     const {createUser,loading} = useContext(AuthContext)
     const handleRegister = (values) => {
@@ -23,11 +24,11 @@ import { AuthContext } from "../../providers/AuthProviders";
         .then(result => {
             const loggedUser = result.createUser
             console.log(loggedUser);
+            navigate('/products')
             
         })
 
     //   registerUser(values);
-
     };
     return (
       <Card className=" w-[1000px] flex items-center justify-start border-2 ">

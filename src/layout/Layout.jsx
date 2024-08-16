@@ -6,7 +6,7 @@ const Layout = () => {
     const noHeaderFooter = location.pathname.includes('/login') || location.pathname.includes('register')
   return (
     <div>
-      <div className="max-w-screen-lg">
+      <div >
        {noHeaderFooter || <Navbar />}
       </div>
 

@@ -1,4 +1,5 @@
 import { useEffect, useState } from "react";
+import ProductCard from "./ProductCard";
 
 const ProductPage = () => {
   const [products, setproduts] = useState([]);
@@ -13,18 +14,18 @@ const ProductPage = () => {
       try {
         const queryParams = new URLSearchParams();
 
-        if (searchTerm) {
-          queryParams.append("search", searchTerm);
-        }
+        if (searchTerm) queryParams.append("search", searchTerm);
         if (category) queryParams.append("category", category);
-        if (brand) queryParams.append("order", brand);
+        if (brand) queryParams.append("brand", brand);
         if (priceRange[0] !== 0) queryParams.append("minPrice", priceRange[0]);
         if (priceRange[1] !== 1000)
           queryParams.append("maxPrice", priceRange[1]);
         if (price) queryParams.append("price", price);
         if (sort) queryParams.append("sort", sort);
-        const url = await fetch(`dsldj?${queryParams}`);
+        const url = await fetch(`http://localhost:9000/api/products?${queryParams}`);
+        
         const data = await url.json();
+        console.log(data);
         setproduts(data);
       } catch (error) {
         console.log("failed to fetch product:", error);
@@ -45,9 +46,7 @@ const ProductPage = () => {
   const handlePrice = (e) => {
     setPrice(e.target.value);
   };
-  const handleSort = (e) => {
-    setSort(e.target.value);
-  };
+  
   const handlePriceRange = (e, type) => {
     const newPrice = [...priceRange];
     if (type === "min") {
@@ -57,8 +56,12 @@ const ProductPage = () => {
     }
     setPriceRange(newPrice);
   };
+  const handleSort = (e) => {
+    setSort(e.target.value);
+  };
   return (
-    <div className="flex justify-center">
+    <div>
+        <div className="flex justify-center">
       <input
         type="text"
         className="p-2 w-60 border border-gray-300 rounded mr-2"
@@ -136,10 +139,20 @@ const ProductPage = () => {
           onChange={handleSort}
         >
           <option value=""></option>
-          <option value=""></option>
-          <option value=""></option>
+          <option value="asc">Price: Low to High</option>
+          <option value="desc">Price: High to Low</option>
         </select>
       </div>
+    </div >
+    <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-2">
+    {
+        products.map(data => <>
+    
+        <ProductCard key={data._id} products={products}></ProductCard>
+    
+        </>)
+    }
+    </div>
     </div>
   );
 };

@@ -1,5 +1,9 @@
-import { useEffect, useState } from "react";
+import { useEffect, useRef, useState } from "react";
 import ProductCard from "./ProductCard";
+import ReactPaginate from "react-paginate";
+import Pagination from '@mui/material/Pagination';
+import Stack from '@mui/material/Stack';
+
 
 const ProductPage = () => {
   const [products, setProducts] = useState([]);
@@ -9,8 +13,14 @@ const ProductPage = () => {
   const [priceRange, setPriceRange] = useState([0, 9999]);
   const [price, setPrice] = useState("");
   const [sort, setSort] = useState("");
+  // pagination state
+  const [limit, setlimit]= useState(8)
+  const [pageCount, setPageCount]= useState(1)
+  const currentPage = useRef()
+
 
   useEffect(() => {
+    currentPage.current=1
     const fetchProduct = async () => {
       try {
         const queryParams = new URLSearchParams();
@@ -25,17 +35,25 @@ const ProductPage = () => {
         if (sort) queryParams.append("sort", sort);
         const url = await fetch(
           `http://localhost:9000/api/products?${queryParams}`
+          // `http://localhost:9000/PaginatedProducts?${queryParams}?page=${currentPage}&limit=${limit}`
         );
 
         const data = await url.json();
         console.log(data);
+        currentPage.current=1
+        
+        // getPaginationProducts(data)
         setProducts(data);
       } catch (error) {
         console.log("failed to fetch product:", error);
       }
     };
     fetchProduct();
+    // getPaginationProducts()
   }, [searchTerm, category, brand, priceRange, price, sort]);
+
+
+
 
   const handleSearch = (e) => {
     setSearchTerm(e.target.value);
@@ -49,7 +67,7 @@ const ProductPage = () => {
   const handlePrice = (e) => {
     setPrice(e.target.value);
   };
-
+// Price range functionality
   const handlePriceRange = (e, type) => {
     const newPrice = [...priceRange];
     if (type === "min") {
@@ -63,7 +81,31 @@ const ProductPage = () => {
     setSort(e.target.value);
   };
 
-  console.log(products);
+// pagination
+ async function handlePageClick(e) {
+    console.log(e);
+    currentPage.current=e.selected+1
+    getPaginationProducts()
+
+  }
+  function changeLimit() {
+    currentPage.current=1
+    getPaginationProducts()
+  }
+  async function getPaginationProducts() {
+    const url = await fetch(
+      `http://localhost:9000/PaginatedProducts?page=${currentPage.current}&limit=${limit}`,{
+        method:"GET"
+      }
+    );
+
+    const data = await url.json();
+    console.log(data, "product data");
+    setPageCount(data.pageCount);
+    setProducts(data.result)
+    console.log(data.result);
+    
+  }
 
   return (
     <div>
@@ -149,10 +191,61 @@ const ProductPage = () => {
           </select>
         </div>
       </div>
+      {/* <PaginationPage></PaginationPage> */}
+      
+      {/* <Pagination align="center" forcePage={currentPage.current-1} pageCount={pageCount} onPageChange={handlePageClick} defaultCurrent={currentPage.current-1} total={limit} /> */}
+     
+      <div className="flex">
+      <ReactPaginate
+        breakLabel="..."
+        nextLabel="next >"
+        onPageChange={handlePageClick}
+        pageRangeDisplayed={5}
+        pageCount={pageCount}
+        previousLabel="< previous"
+        renderOnZeroPageCount={null}
+        marginPagesDisplayed={2}
+        containerClassName="pagination justify-content-center"
+        pageClassName="page-item"
+        pageLinkClassName="page-link"
+        previousClassName="page-item"
+        previousLinkClassName="page-link"
+        nextClassName="page-item"
+        nextLinkClassName="page-link"
+        activeClassName="active"
+        forcePage={currentPage.current-1}
+      />
 
+<Stack  breakLabel="..."
+        // nextLabel="next >"
+        // onPageChange={handlePageClick}
+        // pageRangeDisplayed={5}
+        // pageCount={pageCount}
+        // previousLabel="< previous"
+        // renderOnZeroPageCount={null}
+        // marginPagesDisplayed={2}
+        // containerClassName="pagination justify-content-center"
+        // pageClassName="page-item"
+        // pageLinkClassName="page-link"
+        // previousClassName="page-item"
+        // previousLinkClassName="page-link"
+        // nextClassName="page-item"
+        // nextLinkClassName="page-link"
+        // activeClassName="active"
+        forcePage={currentPage.current-1} spacing={2}>
+      <Pagination forcePage={currentPage.current-1} onChange={handlePageClick} count={pageCount} variant="outlined" color="secondary" />
+    </Stack>
+
+
+
+      <input type="text" onChange={e=>setlimit(e.target.value)} placeholder="limit"/>
+      <button onClick={changeLimit}>Set Limit</button>
+      </div>
       <div className="border-2 flex justify-center items-center p-4">
         <ProductCard products={products}></ProductCard>
       </div>
+      
+      
     </div>
   );
 };

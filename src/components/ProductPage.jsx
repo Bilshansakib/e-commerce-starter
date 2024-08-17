@@ -1,8 +1,6 @@
 import { useEffect, useRef, useState } from "react";
 import ProductCard from "./ProductCard";
 import ReactPaginate from "react-paginate";
-import Pagination from '@mui/material/Pagination';
-import Stack from '@mui/material/Stack';
 import './pagination.css';
 
 const ProductPage = () => {
@@ -64,9 +62,9 @@ const ProductPage = () => {
   const handleOrder = (e) => {
     setBrand(e.target.value);
   };
-  const handlePrice = (e) => {
-    setPrice(e.target.value);
-  };
+  // const handlePrice = (e) => {
+  //   setPrice(e.target.value);
+  // };
 // Price range functionality
   const handlePriceRange = (e, type) => {
     const newPrice = [...priceRange];
@@ -109,27 +107,29 @@ const ProductPage = () => {
 
   return (
     <div>
-      <div className="flex justify-center pt-2 pb-4">
-        <input
+      
+      <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 justify-center pt-2 pb-4 ">
+      <input
           type="text"
-          className="p-2 w-60 border border-gray-300 rounded mr-2"
+          className=" my-2 p-2 border animate-pulse border-gray-300 rounded mr-2 "
           placeholder="search products..."
           value={searchTerm}
           onChange={handleSearch}
         />
-        <input
+        {/* <input
           type="text"
           className="p-2 w-60 border border-gray-300 rounded mr-2"
           placeholder="search price"
           value={price}
           onChange={handlePrice}
-        />
+        /> */}
+        <div className="flex justify-center items-center my-2">
         <select
-          className="p-2 w-60 border border-gray-300 rounded mr-2"
+          className="p-2 w-60 border border-gray-300 rounded mr-2 justify-center text-center"
           value={category}
           onChange={handleCategory}
         >
-          <option value="">Category</option>
+          <option value="">Category ...</option>
           <option value="Electronics">Electronics</option>
           <option value="Computers">Computers</option>
           <option value="Accessories">Accessories</option>
@@ -142,12 +142,14 @@ const ProductPage = () => {
           <option value="Health">Health</option>
           <option value="Home Appliances">Home Appliances</option>
         </select>
+        </div>
+        <div className="flex justify-center items-center my-2">
         <select
-          className="p-2 w-60 border border-gray-300 rounded mr-2"
+          className="p-2 w-60 border border-gray-300 rounded mr-2 "
           value={brand}
           onChange={handleOrder}
         >
-          <option value="">Brand Name</option>
+          <option value="">Brand Name ...</option>
           <option value="SoundWave">SoundWave</option>
           <option value="VisionX">VisionX</option>
           <option value="GamerPro">GamerPro</option>
@@ -162,7 +164,8 @@ const ProductPage = () => {
           <option value="UrbanStyle">UrbanStyle</option>
           <option value="BrewMaster">BrewMaster</option>
         </select>
-        <div className="flex border">
+        </div>
+        <div className="flex justify-center items-center">
           <input
             type="number"
             className="p-2 w-20 h-3/4 border border-gray-300 rounded ml-2"
@@ -170,9 +173,9 @@ const ProductPage = () => {
             value={priceRange[0]}
             onChange={(e) => handlePriceRange(e, "min")}
           />
-          <div>
-            <p>To</p>
-          </div>
+          
+            <p className="ml-2">To</p>
+          
           <input
             type="text"
             className="p-2 w-20 h-3/4 border border-gray-300 rounded ml-2"
@@ -181,7 +184,7 @@ const ProductPage = () => {
             onChange={(e) => handlePriceRange(e, "max")}
           />
           <select
-            className="p-2 bordder border-gray-300 rounded mx-2"
+            className="p-2 bordder border-gray-300 rounded mx-2 border"
             value={sort}
             onChange={handleSort}
           >
@@ -191,11 +194,9 @@ const ProductPage = () => {
           </select>
         </div>
       </div>
-      {/* <PaginationPage></PaginationPage> */}
       
-      {/* <Pagination align="center" forcePage={currentPage.current-1} pageCount={pageCount} onPageChange={handlePageClick} defaultCurrent={currentPage.current-1} total={limit} /> */}
      
-      <div className="flex">
+      <div className="flex gap-2 my-2">
       <ReactPaginate
         breakLabel="..."
         nextLabel="next >"
@@ -216,33 +217,11 @@ const ProductPage = () => {
         forcePage={currentPage.current-1}
       />
 
-{/* <Stack  breakLabel="..."
-        // nextLabel="next >"
-        // onPageChange={handlePageClick}
-        // pageRangeDisplayed={5}
-        // pageCount={pageCount}
-        // previousLabel="< previous"
-        // renderOnZeroPageCount={null}
-        // marginPagesDisplayed={2}
-        // containerClassName="pagination justify-content-center"
-        // pageClassName="page-item"
-        // pageLinkClassName="page-link"
-        // previousClassName="page-item"
-        // previousLinkClassName="page-link"
-        // nextClassName="page-item"
-        // nextLinkClassName="page-link"
-        // activeClassName="active"
-         spacing={2}>
-      <Pagination   
-    count={pageCount}
-  onPageChange={handlePageClick} variant="outlined" color="secondary" />
-    </Stack> */}
 
-
-
-
-      <input type="text" onChange={e=>setlimit(e.target.value)} placeholder="limit"/>
-      <button onClick={changeLimit}>Set Limit</button>
+    <div className="flex items-center">
+    <input className="p-2 my-2 border animate-pulse border-gray-300 rounded mr-2" type="text" onChange={e=>setlimit(e.target.value)} placeholder="limit"/>
+    <button className="btn" onClick={changeLimit}>Set Limit</button>
+    </div>
       </div>
       <div className="border-2 flex justify-center items-center p-4">
         <ProductCard products={products}></ProductCard>

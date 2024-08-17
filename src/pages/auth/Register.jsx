@@ -31,7 +31,7 @@ import { AuthContext } from "../../providers/AuthProviders";
     //   registerUser(values);
     };
     return (
-      <Card className=" w-[1000px] flex items-center justify-start border-2 ">
+      <Card className=" flex items-center justify-start border-2 ">
         <Flex gap="large" align="center">
           <Flex vertical flex={1}>
             {/* form */}

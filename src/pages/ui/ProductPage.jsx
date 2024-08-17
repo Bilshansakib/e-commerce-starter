@@ -33,7 +33,7 @@ const ProductPage = () => {
         if (sort) queryParams.append("sort", sort);
         const url = await fetch(
           `https://e-commerce-stater-server.vercel.app/api/products?${queryParams}`
-          // `http://localhost:9000/PaginatedProducts?${queryParams}?page=${currentPage}&limit=${limit}`
+          // `https://e-commerce-stater-server.vercel.app/PaginatedProducts?${queryParams}?page=${currentPage}&limit=${limit}`
         );
 
         const data = await url.json();

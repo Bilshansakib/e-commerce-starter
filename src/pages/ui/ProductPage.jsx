@@ -32,7 +32,7 @@ const ProductPage = () => {
         if (price) queryParams.append("price", price);
         if (sort) queryParams.append("sort", sort);
         const url = await fetch(
-          `http://localhost:9000/api/products?${queryParams}`
+          `https://e-commerce-stater-server.vercel.app/api/products?${queryParams}`
           // `http://localhost:9000/PaginatedProducts?${queryParams}?page=${currentPage}&limit=${limit}`
         );
 
@@ -88,7 +88,7 @@ const ProductPage = () => {
   }
   async function getPaginationProducts() {
     const url = await fetch(
-      `http://localhost:9000/PaginatedProducts?page=${currentPage.current}&limit=${limit}`,
+      `https://e-commerce-stater-server.vercel.app/PaginatedProducts?page=${currentPage.current}&limit=${limit}`,
       {
         method: "GET",
       }
@@ -106,6 +106,7 @@ const ProductPage = () => {
       <Helmet>
         <title>Product Hub | Home</title>
       </Helmet>
+      <h1 className="flex text-center items-center justify-center animate-bounce pt-4">This website is under construction......</h1>
       <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 justify-center pt-2 pb-4 ">
         <input
           type="text"
@@ -193,8 +194,8 @@ const ProductPage = () => {
         </div>
       </div>
 
-      <div className=" lg:flex   gap-2 my-2">
-        <div>
+      <div className=" lg:flex w-full  gap-2 my-2">
+        <div className="w-full">
         <ReactPaginate
           breakLabel="..."
           nextLabel="next >"

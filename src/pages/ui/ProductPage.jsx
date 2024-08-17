@@ -1,7 +1,7 @@
 import { useEffect, useRef, useState } from "react";
-import ProductCard from "./ProductCard";
+import ProductCard from "../../components/shared/ProductCard";
 import ReactPaginate from "react-paginate";
-import './pagination.css';
+import "../../components/shared/pagination.css";
 
 const ProductPage = () => {
   const [products, setProducts] = useState([]);
@@ -12,13 +12,12 @@ const ProductPage = () => {
   const [price, setPrice] = useState("");
   const [sort, setSort] = useState("");
   // pagination state
-  const [limit, setlimit]= useState(8)
-  const [pageCount, setPageCount]= useState(1)
-  const currentPage = useRef()
-
+  const [limit, setlimit] = useState(8);
+  const [pageCount, setPageCount] = useState(1);
+  const currentPage = useRef();
 
   useEffect(() => {
-    currentPage.current=1
+    currentPage.current = 1;
     const fetchProduct = async () => {
       try {
         const queryParams = new URLSearchParams();
@@ -38,8 +37,8 @@ const ProductPage = () => {
 
         const data = await url.json();
         console.log(data);
-        currentPage.current=1
-        
+        currentPage.current = 1;
+
         // getPaginationProducts(data)
         setProducts(data);
       } catch (error) {
@@ -49,9 +48,6 @@ const ProductPage = () => {
     fetchProduct();
     // getPaginationProducts()
   }, [searchTerm, category, brand, priceRange, price, sort]);
-
-
-
 
   const handleSearch = (e) => {
     setSearchTerm(e.target.value);
@@ -65,7 +61,7 @@ const ProductPage = () => {
   // const handlePrice = (e) => {
   //   setPrice(e.target.value);
   // };
-// Price range functionality
+  // Price range functionality
   const handlePriceRange = (e, type) => {
     const newPrice = [...priceRange];
     if (type === "min") {
@@ -79,37 +75,35 @@ const ProductPage = () => {
     setSort(e.target.value);
   };
 
-// pagination
- async function handlePageClick(e) {
+  // pagination
+  async function handlePageClick(e) {
     console.log(e);
-    currentPage.current=e.selected+1
-    getPaginationProducts()
-
+    currentPage.current = e.selected + 1;
+    getPaginationProducts();
   }
   function changeLimit() {
-    currentPage.current=1
-    getPaginationProducts()
+    currentPage.current = 1;
+    getPaginationProducts();
   }
   async function getPaginationProducts() {
     const url = await fetch(
-      `http://localhost:9000/PaginatedProducts?page=${currentPage.current}&limit=${limit}`,{
-        method:"GET"
+      `http://localhost:9000/PaginatedProducts?page=${currentPage.current}&limit=${limit}`,
+      {
+        method: "GET",
       }
     );
 
     const data = await url.json();
     console.log(data, "product data");
     setPageCount(data.pageCount);
-    setProducts(data.result)
+    setProducts(data.result);
     console.log(data.result);
-    
   }
 
   return (
     <div>
-      
       <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 justify-center pt-2 pb-4 ">
-      <input
+        <input
           type="text"
           className=" my-2 p-2 border animate-pulse border-gray-300 rounded mr-2 "
           placeholder="search products..."
@@ -124,46 +118,46 @@ const ProductPage = () => {
           onChange={handlePrice}
         /> */}
         <div className="flex justify-center items-center my-2">
-        <select
-          className="p-2 w-60 border border-gray-300 rounded mr-2 justify-center text-center"
-          value={category}
-          onChange={handleCategory}
-        >
-          <option value="">Category ...</option>
-          <option value="Electronics">Electronics</option>
-          <option value="Computers">Computers</option>
-          <option value="Accessories">Accessories</option>
-          <option value="Audio">Audio</option>
-          <option value="Photography">Photography</option>
-          <option value="Wearables">Wearables</option>
-          <option value="Gaming">Gaming</option>
-          <option value="Tablets">Tablets</option>
-          <option value="Smart Home">Smart Home</option>
-          <option value="Health">Health</option>
-          <option value="Home Appliances">Home Appliances</option>
-        </select>
+          <select
+            className="p-2 w-60 border border-gray-300 rounded mr-2 justify-center text-center"
+            value={category}
+            onChange={handleCategory}
+          >
+            <option value="">Category ...</option>
+            <option value="Electronics">Electronics</option>
+            <option value="Computers">Computers</option>
+            <option value="Accessories">Accessories</option>
+            <option value="Audio">Audio</option>
+            <option value="Photography">Photography</option>
+            <option value="Wearables">Wearables</option>
+            <option value="Gaming">Gaming</option>
+            <option value="Tablets">Tablets</option>
+            <option value="Smart Home">Smart Home</option>
+            <option value="Health">Health</option>
+            <option value="Home Appliances">Home Appliances</option>
+          </select>
         </div>
         <div className="flex justify-center items-center my-2">
-        <select
-          className="p-2 w-60 border border-gray-300 rounded mr-2 "
-          value={brand}
-          onChange={handleOrder}
-        >
-          <option value="">Brand Name ...</option>
-          <option value="SoundWave">SoundWave</option>
-          <option value="VisionX">VisionX</option>
-          <option value="GamerPro">GamerPro</option>
-          <option value="FlexFit">FlexFit</option>
-          <option value="HydroFlow">HydroFlow</option>
-          <option value="FitPulse">FitPulse</option>
-          <option value="KitchenPro">KitchenPro</option>
-          <option value="ChargeIt">ChargeIt</option>
-          <option value="SnapShot">SnapShot</option>
-          <option value="TechGuru">TechGuru</option>
-          <option value="CleanHome">CleanHome</option>
-          <option value="UrbanStyle">UrbanStyle</option>
-          <option value="BrewMaster">BrewMaster</option>
-        </select>
+          <select
+            className="p-2 w-60 border border-gray-300 rounded mr-2 "
+            value={brand}
+            onChange={handleOrder}
+          >
+            <option value="">Brand Name ...</option>
+            <option value="SoundWave">SoundWave</option>
+            <option value="VisionX">VisionX</option>
+            <option value="GamerPro">GamerPro</option>
+            <option value="FlexFit">FlexFit</option>
+            <option value="HydroFlow">HydroFlow</option>
+            <option value="FitPulse">FitPulse</option>
+            <option value="KitchenPro">KitchenPro</option>
+            <option value="ChargeIt">ChargeIt</option>
+            <option value="SnapShot">SnapShot</option>
+            <option value="TechGuru">TechGuru</option>
+            <option value="CleanHome">CleanHome</option>
+            <option value="UrbanStyle">UrbanStyle</option>
+            <option value="BrewMaster">BrewMaster</option>
+          </select>
         </div>
         <div className="flex justify-center items-center">
           <input
@@ -173,9 +167,9 @@ const ProductPage = () => {
             value={priceRange[0]}
             onChange={(e) => handlePriceRange(e, "min")}
           />
-          
-            <p className="ml-2">To</p>
-          
+
+          <p className="ml-2">To</p>
+
           <input
             type="text"
             className="p-2 w-20 h-3/4 border border-gray-300 rounded ml-2"
@@ -194,40 +188,45 @@ const ProductPage = () => {
           </select>
         </div>
       </div>
-      
-     
-      <div className="flex gap-2 my-2">
-      <ReactPaginate
-        breakLabel="..."
-        nextLabel="next >"
-        onPageChange={handlePageClick}
-        pageRangeDisplayed={5}
-        pageCount={pageCount}
-        previousLabel="< previous"
-        renderOnZeroPageCount={null}
-        marginPagesDisplayed={2}
-        containerClassName="pagination  gap-4 justify-content-center"
-        pageClassName="page-item"
-        pageLinkClassName="page-link"
-        previousClassName="page-item"
-        previousLinkClassName="page-link"
-        nextClassName="page-item"
-        nextLinkClassName="page-link"
-        activeClassName="active"
-        forcePage={currentPage.current-1}
-      />
 
+      <div className=" lg:flex   gap-2 my-2">
+        <div>
+        <ReactPaginate
+          breakLabel="..."
+          nextLabel="next >"
+          onPageChange={handlePageClick}
+          pageRangeDisplayed={5}
+          pageCount={pageCount}
+          previousLabel="< previous"
+          renderOnZeroPageCount={null}
+          marginPagesDisplayed={2}
+          containerClassName="pagination  gap-4 justify-content-center"
+          pageClassName="page-item"
+          pageLinkClassName="page-link"
+          previousClassName="page-item"
+          previousLinkClassName="page-link"
+          nextClassName="page-item"
+          nextLinkClassName="page-link"
+          activeClassName="active"
+          forcePage={currentPage.current - 1}
+        />
+        </div>
 
-    <div className="flex items-center">
-    <input className="p-2 my-2 border animate-pulse border-gray-300 rounded mr-2" type="text" onChange={e=>setlimit(e.target.value)} placeholder="limit"/>
-    <button className="btn" onClick={changeLimit}>Set Limit</button>
-    </div>
+        <div className="flex items-center">
+          <input
+            className="p-2 my-2 border animate-pulse border-gray-300 rounded mr-2"
+            type="text"
+            onChange={(e) => setlimit(e.target.value)}
+            placeholder="Please set limit to check"
+          />
+          <button type="submit" className="btn" onClick={changeLimit}>
+            Set Limit
+          </button>
+        </div>
       </div>
       <div className="border-2 flex justify-center items-center p-4">
         <ProductCard products={products}></ProductCard>
       </div>
-      
-      
     </div>
   );
 };

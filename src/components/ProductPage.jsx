@@ -3,7 +3,7 @@ import ProductCard from "./ProductCard";
 import ReactPaginate from "react-paginate";
 import Pagination from '@mui/material/Pagination';
 import Stack from '@mui/material/Stack';
-
+import './pagination.css';
 
 const ProductPage = () => {
   const [products, setProducts] = useState([]);
@@ -205,7 +205,7 @@ const ProductPage = () => {
         previousLabel="< previous"
         renderOnZeroPageCount={null}
         marginPagesDisplayed={2}
-        containerClassName="pagination justify-content-center"
+        containerClassName="pagination  gap-4 justify-content-center"
         pageClassName="page-item"
         pageLinkClassName="page-link"
         previousClassName="page-item"
@@ -216,7 +216,7 @@ const ProductPage = () => {
         forcePage={currentPage.current-1}
       />
 
-<Stack  breakLabel="..."
+{/* <Stack  breakLabel="..."
         // nextLabel="next >"
         // onPageChange={handlePageClick}
         // pageRangeDisplayed={5}
@@ -232,9 +232,12 @@ const ProductPage = () => {
         // nextClassName="page-item"
         // nextLinkClassName="page-link"
         // activeClassName="active"
-        forcePage={currentPage.current-1} spacing={2}>
-      <Pagination forcePage={currentPage.current-1} onChange={handlePageClick} count={pageCount} variant="outlined" color="secondary" />
-    </Stack>
+         spacing={2}>
+      <Pagination   
+    count={pageCount}
+  onPageChange={handlePageClick} variant="outlined" color="secondary" />
+    </Stack> */}
+
 
 
 

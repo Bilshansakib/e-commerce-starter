@@ -2,6 +2,7 @@ import { useEffect, useRef, useState } from "react";
 import ProductCard from "../../components/shared/ProductCard";
 import ReactPaginate from "react-paginate";
 import "../../components/shared/pagination.css";
+import { Helmet } from "react-helmet-async";
 
 const ProductPage = () => {
   const [products, setProducts] = useState([]);
@@ -102,6 +103,9 @@ const ProductPage = () => {
 
   return (
     <div>
+      <Helmet>
+        <title>Product Hub | Home</title>
+      </Helmet>
       <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 justify-center pt-2 pb-4 ">
         <input
           type="text"

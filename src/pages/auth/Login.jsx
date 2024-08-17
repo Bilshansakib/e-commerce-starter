@@ -1,62 +1,65 @@
 import {
-    Alert,
-    Button,
-    Card,
-    Flex,
-    Form,
-    Input,
-    message,
-    Spin,
-    Typography,
-  } from "antd";
-  import { Link,  useNavigate } from "react-router-dom";
-import registerImage from "../../assets/MFSAppRegPage.jpg"
+  Button,
+  Card,
+  Flex,
+  Form,
+  Input,
+  Typography,
+} from "antd";
+import { Link, useNavigate } from "react-router-dom";
+import registerImage from "../../assets/MFSAppRegPage.jpg";
 import { useContext } from "react";
 import { AuthContext } from "../../providers/AuthProviders";
-  
+import { Helmet } from "react-helmet-async";
 
 const Login = () => {
-    const navigate = useNavigate()
- const {signIn, logOut} = useContext(AuthContext)
-    const handleLogin = async (values)=> {
-        console.log(values)
-        signIn(values.email , values.password)
-        .then(result => {
-            const user = result.user
-            console.log(user)
-            navigate('/products')
-            
-        })
-        
-    }
+  const navigate = useNavigate();
+  const { signIn } = useContext(AuthContext);
+  const handleLogin = async (values) => {
+    console.log(values);
+    signIn(values.email, values.password).then((result) => {
+      const user = result.user;
+      console.log(user);
+      navigate("/products");
+    });
+  };
 
-    return (
-        <Card className=" flex items-center justify-start border-2 ">
+  return (
+    <>
+      <Card className=" flex items-center justify-start border-2 ">
+      <Helmet>
+        <title>Product Hub | Login</title>
+      </Helmet>
         <Flex gap="large" align="center">
-        <Flex flex={1}>
+          <Flex flex={1}>
             <img src={registerImage} className="w-full rounded-lg"></img>
           </Flex>
           <Flex vertical flex={1}>
             {/* form */}
             <Typography.Title level={3} strong className="title">
-             Sign In
+              Sign In
             </Typography.Title>
-            <Typography.Text type="secondary" level={3} strong className="title">
-             Unlock your world
+            <Typography.Text
+              type="secondary"
+              level={3}
+              strong
+              className="title"
+            >
+              Unlock your world
             </Typography.Text>
             <Form layout="vertical" onFinish={handleLogin} autoComplete="off">
               {/* <Form.Item
-                label="Full Name"
-                name="name"
-                rules={[
-                  {
-                    required: true,
-                    message: "please input your full name",
-                  },
-                ]}
-              >
-                <Input size="large" placeholder="Enter your full name"></Input>
-              </Form.Item> */}
+        label="Full Name"
+        name="name"
+        rules={[
+          {
+            required: true,
+            message: "please input your full name",
+          },
+        ]}
+      >
+        <Input size="large" placeholder="Enter your full name"></Input>
+      </Form.Item> */}
               <Form.Item
                 label="Email"
                 name="email"
@@ -74,7 +77,7 @@ const Login = () => {
               >
                 <Input size="large" placeholder="Enter your email"></Input>
               </Form.Item>
-  
+
               <Form.Item
                 label="Password"
                 name="password"
@@ -92,34 +95,34 @@ const Login = () => {
                 ></Input.Password>
               </Form.Item>
               {/* <Form.Item
-                label="Password"
-                name="passwordConfirm"
-                size="large"
-                rules={[
-                  {
-                    required: true,
-                    message: "please input your Confirm password",
-                  },
-                ]}
-              >
-                <Input.Password
-                  size="large"
-                  placeholder="Re-Enter your password"
-                ></Input.Password>
-              </Form.Item> */}
-  
+        label="Password"
+        name="passwordConfirm"
+        size="large"
+        rules={[
+          {
+            required: true,
+            message: "please input your Confirm password",
+          },
+        ]}
+      >
+        <Input.Password
+          size="large"
+          placeholder="Re-Enter your password"
+        ></Input.Password>
+      </Form.Item> */}
+
               {/* {error && (
-                  <Alert
-                  description={error}
-                  type="error"
-                  showIcon
-                  closable
-                  className="alert"
-                  >
-  
-                  </Alert>
-              )} */}
-  
+          <Alert
+          description={error}
+          type="error"
+          showIcon
+          closable
+          className="alert"
+          >
+
+          </Alert>
+      )} */}
+
               <Form.Item>
                 <Button
                   // type={`${loading ? "" : "primary"}`}
@@ -128,25 +131,24 @@ const Login = () => {
                   className="btn w-full"
                 >
                   {/* {loading ? <Spin></Spin> : " Create Account"} */}
-                 Sign in
+                  Sign in
                 </Button>
               </Form.Item>
               <Form.Item>
                 <Link to="/register">
                   <Button size="large" className="btn btn-link w-full">
-                    
                     Create account
                   </Button>
                 </Link>
               </Form.Item>
             </Form>
           </Flex>
-        
-  
+
           {/* Image */}
         </Flex>
       </Card>
-    );
+    </>
+  );
 };
 
 export default Login;

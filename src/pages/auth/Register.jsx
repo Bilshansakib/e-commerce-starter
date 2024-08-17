@@ -12,6 +12,7 @@ import {
   import registerImage from "../../assets/MFSAppRegPage.jpg";
 import { useContext, useState } from "react";
 import { AuthContext } from "../../providers/AuthProviders";
+import { Helmet } from "react-helmet-async";
 
   
   const Register = () => {
@@ -32,6 +33,9 @@ import { AuthContext } from "../../providers/AuthProviders";
     };
     return (
       <Card className=" flex items-center justify-start border-2 ">
+        <Helmet>
+        <title>Product Hub | Register</title>
+      </Helmet>
         <Flex gap="large" align="center">
           <Flex vertical flex={1}>
             {/* form */}

@@ -1,5 +1,6 @@
 import { Outlet, useLocation } from "react-router-dom";
 import Navbar from "../components/shared/Navbar";
+import Footer from "../components/shared/Footer";
 
 const Layout = () => {
     const location = useLocation()
@@ -11,6 +12,9 @@ const Layout = () => {
       </div>
 
       <Outlet />
+      <div>
+      {noHeaderFooter || <Footer></Footer>}
+      </div>
     </div>
   );
 };

@@ -36,6 +36,9 @@ const Login = () => {
           </Flex>
           <Flex vertical flex={1}>
             {/* form */}
+            <Typography.Title type="success" level={6} strong className="title">
+              Product Hub
+            </Typography.Title>
             <Typography.Title level={3} strong className="title">
               Sign In
             </Typography.Title>

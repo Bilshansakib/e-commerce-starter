@@ -13,12 +13,12 @@ const ProductPage = () => {
   const [price, setPrice] = useState("");
   const [sort, setSort] = useState("");
   // pagination state
-  const [limit, setlimit] = useState(8);
+  const [limit, setlimit] = useState(5);
   const [pageCount, setPageCount] = useState(1);
   const currentPage = useRef();
 
   useEffect(() => {
-    currentPage.current = 1;
+    // currentPage.current = 1;
     const fetchProduct = async () => {
       try {
         const queryParams = new URLSearchParams();
@@ -32,7 +32,7 @@ const ProductPage = () => {
         if (price) queryParams.append("price", price);
         if (sort) queryParams.append("sort", sort);
         const url = await fetch(
-          `https://e-commerce-stater-server.vercel.app/api/products?${queryParams}`
+          `${import.meta.env.VITE_API_URL}/api/products?${queryParams}`
           // `https://e-commerce-stater-server.vercel.app/PaginatedProducts?${queryParams}?page=${currentPage}&limit=${limit}`
         );
 
@@ -88,7 +88,7 @@ const ProductPage = () => {
   }
   async function getPaginationProducts() {
     const url = await fetch(
-      `https://e-commerce-stater-server.vercel.app/PaginatedProducts?page=${currentPage.current}&limit=${limit}`,
+      `${import.meta.env.VITE_API_URL}/PaginatedProducts?page=${currentPage.current}&limit=${limit}`,
       {
         method: "GET",
       }
@@ -102,19 +102,14 @@ const ProductPage = () => {
   }
 
   return (
-    <div>
+    <div className="bg-slate-100">
       <Helmet>
         <title>Product Hub | Home</title>
       </Helmet>
-      <h1 className="flex text-center items-center justify-center animate-bounce pt-4">This website is under construction......</h1>
-      <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 justify-center pt-2 pb-4 ">
-        <input
-          type="text"
-          className=" my-2 p-2 border animate-pulse border-gray-300 rounded mr-2 "
-          placeholder="search products..."
-          value={searchTerm}
-          onChange={handleSearch}
-        />
+      <h1 className="flex text-center items-center justify-center animate-bounce pt-4">
+        This website is under construction......
+      </h1>
+      <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 p-4 justify-center ">
         {/* <input
           type="text"
           className="p-2 w-60 border border-gray-300 rounded mr-2"
@@ -123,8 +118,15 @@ const ProductPage = () => {
           onChange={handlePrice}
         /> */}
         <div className="flex justify-center items-center my-2">
+          <input
+            type="text"
+            className=" my-2 p-2 border border-gray-300 rounded mr-2 "
+            placeholder="search products..."
+            value={searchTerm}
+            onChange={handleSearch}
+          />
           <select
-            className="p-2 w-60 border border-gray-300 rounded mr-2 justify-center text-center"
+            className="p-2  border border-gray-300 rounded mr-2 justify-center text-center"
             value={category}
             onChange={handleCategory}
           >
@@ -143,8 +145,27 @@ const ProductPage = () => {
           </select>
         </div>
         <div className="flex justify-center items-center my-2">
+          <input
+            type="number"
+            className="p-2 w-20 border border-gray-300 rounded ml-2"
+            placeholder="min price"
+            value={priceRange[0]}
+            onChange={(e) => handlePriceRange(e, "min")}
+          />
+
+          <p className="mx-2">To</p>
+
+          <input
+            type="text"
+            className="p-2 w-20 border border-gray-300 rounded "
+            placeholder="min price"
+            value={priceRange[1]}
+            onChange={(e) => handlePriceRange(e, "max")}
+          />
+        </div>
+        <div className="flex justify-center items-center">
           <select
-            className="p-2 w-60 border border-gray-300 rounded mr-2 "
+            className="p-2  border border-gray-300 rounded mr-2 "
             value={brand}
             onChange={handleOrder}
           >
@@ -163,25 +184,6 @@ const ProductPage = () => {
             <option value="UrbanStyle">UrbanStyle</option>
             <option value="BrewMaster">BrewMaster</option>
           </select>
-        </div>
-        <div className="flex justify-center items-center">
-          <input
-            type="number"
-            className="p-2 w-20 h-3/4 border border-gray-300 rounded ml-2"
-            placeholder="min price"
-            value={priceRange[0]}
-            onChange={(e) => handlePriceRange(e, "min")}
-          />
-
-          <p className="ml-2">To</p>
-
-          <input
-            type="text"
-            className="p-2 w-20 h-3/4 border border-gray-300 rounded ml-2"
-            placeholder="min price"
-            value={priceRange[1]}
-            onChange={(e) => handlePriceRange(e, "max")}
-          />
           <select
             className="p-2 bordder border-gray-300 rounded mx-2 border"
             value={sort}
@@ -194,27 +196,27 @@ const ProductPage = () => {
         </div>
       </div>
 
-      <div className=" lg:flex w-full  gap-2 my-2">
-        <div className="w-full">
-        <ReactPaginate
-          breakLabel="..."
-          nextLabel="next >"
-          onPageChange={handlePageClick}
-          pageRangeDisplayed={5}
-          pageCount={pageCount}
-          previousLabel="< previous"
-          renderOnZeroPageCount={null}
-          marginPagesDisplayed={2}
-          containerClassName="pagination  gap-4 justify-content-center"
-          pageClassName="page-item"
-          pageLinkClassName="page-link"
-          previousClassName="page-item"
-          previousLinkClassName="page-link"
-          nextClassName="page-item"
-          nextLinkClassName="page-link"
-          activeClassName="active"
-          forcePage={currentPage.current - 1}
-        />
+      <div className=" lg:flex flex-wrap w-full gap-2 my-2">
+        <div className="w-3/4 ml-2">
+          <ReactPaginate
+            breakLabel="..."
+            nextLabel="next >"
+            onPageChange={handlePageClick}
+            pageRangeDisplayed={5}
+            pageCount={pageCount}
+            previousLabel="< previous"
+            renderOnZeroPageCount={null}
+            marginPagesDisplayed={2}
+            containerClassName="pagination  gap-4 justify-content-center"
+            pageClassName="page-item"
+            pageLinkClassName="page-link"
+            previousClassName="page-item"
+            previousLinkClassName="page-link"
+            nextClassName="page-item"
+            nextLinkClassName="page-link"
+            activeClassName="active"
+            forcePage={currentPage.current - 1}
+          />
         </div>
 
         <div className="flex items-center">
@@ -229,7 +231,7 @@ const ProductPage = () => {
           </button>
         </div>
       </div>
-      <div className="border-2 flex justify-center items-center p-4">
+      <div className="flex justify-center items-center p-4">
         <ProductCard products={products}></ProductCard>
       </div>
     </div>

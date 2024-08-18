@@ -39,7 +39,7 @@ import { Helmet } from "react-helmet-async";
         <Flex gap="large" align="center">
           <Flex vertical flex={1}>
             {/* form */}
-            <Typography.Title level={6} strong className="title">
+            <Typography.Title type="success" level={6} strong className="title">
               Welcome to Product Hub
             </Typography.Title>
             <Typography.Title level={3} strong className="title">

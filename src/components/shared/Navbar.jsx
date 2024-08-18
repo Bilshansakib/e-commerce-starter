@@ -7,7 +7,7 @@ const Navbar = () => {
     
   return (
     <div className="container mx-auto">
-      <div className="navbar  bg-base-200 px-5 rounded-xl">
+      <div className="navbar  bg-slate-400 px-5 rounded">
         <div className="flex-1">
           <h3 className=" text-xl">Product Hub</h3>
           <h6 className=" text-xl ml-2">( e-commerce-starter )</h6>
